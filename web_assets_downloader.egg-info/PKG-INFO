@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: web-assets-downloader
+Version: 1.0.3
+Summary: A package for downloading web content and assets
+Home-page: https://github.com/arif-x/web_downloader
+Author: Ariffudin
+Author-email: sudo.ariffudin@email.com
+License: MIT
+Keywords: web downloader requests BeautifulSoup
+Platform: UNKNOWN
+
+UNKNOWN
+

@@ -1,0 +1,9 @@
+setup.py
+web_assets_downloader/__init__.py
+web_assets_downloader/web_assets_downloader.py
+web_assets_downloader.egg-info/PKG-INFO
+web_assets_downloader.egg-info/SOURCES.txt
+web_assets_downloader.egg-info/dependency_links.txt
+web_assets_downloader.egg-info/entry_points.txt
+web_assets_downloader.egg-info/requires.txt
+web_assets_downloader.egg-info/top_level.txt
