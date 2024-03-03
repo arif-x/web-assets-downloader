@@ -68,4 +68,3 @@ def download_html_and_asset(url_list, save_folder):
             # Download assets
             download_asset(asset_urls, save_folder, headers)
 
-    return True
