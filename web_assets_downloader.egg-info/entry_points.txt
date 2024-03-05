@@ -1,3 +1,3 @@
 [console_scripts]
-web-assets-downloader = web_assets_downloader.downloader:main
+web_assets_downloader = web_assets_downloader.downloader:main
 
