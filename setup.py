@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='web_assets_downloader',
-    version='1.0.6',
+    version='1.0.7',
     packages=find_packages(),
     install_requires=[
         'requests',
@@ -20,7 +20,7 @@ setup(
     long_description_content_type='text/plain',
     license='MIT',
     keywords='web downloader requests BeautifulSoup',
-    url='https://github.com/arif-x/web-assets-downloader',
+    url='https://github.com/arif-x/web-assets-downloader.git',
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
@@ -32,6 +32,6 @@ setup(
         'Operating System :: OS Independent',
     ],
     dependency_links=[
-        'git+https://github.com/arif-x/web-assets-downloader.git#egg=web-assets-downloader-1.0.5'
+        'git+https://github.com/arif-x/web-assets-downloader.git#egg=web-assets-downloader-1.0.7'
     ]
 )
