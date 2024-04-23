@@ -2,11 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='web_assets_downloader',
-    version='1.1.3',
+    version='2.0.0',
     packages=find_packages(),
     install_requires=[
         'requests',
-        'beautifulsoup4'
+        'beautifulsoup4',
+        'pillow',
+        'PyPDF2',
+        'python-docx',
+        'openpyxl'
     ],
     entry_points={
         'console_scripts': [

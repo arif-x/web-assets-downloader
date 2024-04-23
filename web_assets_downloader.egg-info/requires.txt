@@ -1,2 +1,6 @@
+PyPDF2
 beautifulsoup4
+openpyxl
+pillow
+python-docx
 requests
