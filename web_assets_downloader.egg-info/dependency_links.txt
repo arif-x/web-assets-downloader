@@ -1,1 +1,0 @@
-git+https://github.com/arif-x/web-assets-downloader.git#egg=web-assets-downloader-1.1.0
