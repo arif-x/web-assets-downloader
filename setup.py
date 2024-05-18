@@ -19,7 +19,7 @@ setup(
     },
     author='Ariffudin',
     author_email='sudo.ariffudin@email.com',
-    description='A package for downloading web content and assets',
+    description="A package for downloading web content and assets",
     long_description='A package for downloading web content and assets from URLs.',
     long_description_content_type='text/plain',
     license='MIT',
