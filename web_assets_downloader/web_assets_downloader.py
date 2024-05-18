@@ -78,7 +78,7 @@ def extract_text_from_excel(excel_path):
             text += '\n'
     print(f"Text extracted from {excel_path}: {text}")
 
-def download_html_and_asset(url_list, save_folder, max_depth=None):
+def download_html_and_asset(url_list, save_folder, max_depth=None, img=True, pdf=True, doc=True, xlx=True):
     # Standard User-Agent header for a common web browser
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
 
@@ -126,6 +126,6 @@ def download_html_and_asset(url_list, save_folder, max_depth=None):
                 asset_urls.add(absolute_url)
 
             # Download assets
-            download_asset(asset_urls, save_folder, headers)
+            download_asset(asset_urls, save_folder, headers, img, pdf, doc, xlx)
 
     return True
