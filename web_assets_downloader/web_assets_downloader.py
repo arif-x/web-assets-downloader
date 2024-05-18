@@ -8,7 +8,7 @@ import PyPDF2
 from docx import Document
 from openpyxl import load_workbook
 
-def download_asset(asset_urls, save_folder, headers):
+def download_asset(asset_urls, save_folder, headers, img=True, pdf=True, doc=True, xlx=True):
     for url in asset_urls:
         print(url)
         response = requests.get(url, headers=headers)
@@ -28,21 +28,25 @@ def download_asset(asset_urls, save_folder, headers):
                 f.write(response.content)
                 print(f"Downloaded {asset_path}.")
 
-            # Resize images if it's an image file
-            if asset_path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-                resize_image(asset_filepath, (100, 100))  # Specify desired dimensions
+            if img:
+                # Resize images if it's an image file
+                if asset_path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                    resize_image(asset_filepath, (100, 100))  # Specify desired dimensions
 
-            # Extract text from PDF files
-            if asset_path.lower().endswith('.pdf'):
-                extract_text_from_pdf(asset_filepath)
+            if pdf:
+                # Extract text from PDF files
+                if asset_path.lower().endswith('.pdf'):
+                    extract_text_from_pdf(asset_filepath)
 
-            # Extract text from Word files
-            if asset_path.lower().endswith('.docx'):
-                extract_text_from_docx(asset_filepath)
+            if doc:
+                # Extract text from Word files
+                if asset_path.lower().endswith('.docx'):
+                    extract_text_from_docx(asset_filepath)
 
-            # Extract text from Excel files
-            if asset_path.lower().endswith('.xlsx'):
-                extract_text_from_excel(asset_filepath)
+            if xlx:
+                # Extract text from Excel files
+                if asset_path.lower().endswith('.xlsx'):
+                    extract_text_from_excel(asset_filepath)
 
 def resize_image(image_path, dimensions):
     img = Image.open(image_path)
