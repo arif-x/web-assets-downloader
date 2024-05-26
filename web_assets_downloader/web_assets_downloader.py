@@ -1,14 +1,12 @@
 import os
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin, unquote
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, unquote
-from PIL import Image
 import PyPDF2
 from docx import Document
 from openpyxl import load_workbook
 
-def download_asset(asset_urls, save_folder, headers, img=True, pdf=True, doc=True, xlx=True):
+def download_asset(asset_urls, save_folder, headers, img=True, pdf=True, doc=True, xlx=True, html=True):
     for url in asset_urls:
         print(url)
         response = requests.get(url, headers=headers)
@@ -16,6 +14,35 @@ def download_asset(asset_urls, save_folder, headers, img=True, pdf=True, doc=Tru
             # Parse the asset URL to extract the path
             parsed_url = urlparse(url)
             asset_path = unquote(parsed_url.path)
+
+            # If the asset path ends with '/', it's likely a directory, so append 'index.html'
+            if asset_path.endswith('/') or asset_path == '':
+                asset_path += 'index.html'
+
+            # Check if the file is an HTML, JS, or CSS file
+            if not html and asset_path.lower().endswith(('.html', '.htm', '.js', '.css')):
+                print(f"Skipping HTML/CSS/JS file: {asset_path}")
+                continue
+
+            # Check if the file is a PDF file
+            if not pdf and asset_path.lower().endswith('.pdf'):
+                print(f"Skipping PDF file: {asset_path}")
+                continue
+
+            # Check if the file is a DOCX file
+            if not doc and asset_path.lower().endswith('.docx'):
+                print(f"Skipping DOCX file: {asset_path}")
+                continue
+
+            # Check if the file is an XLSX file
+            if not xlx and asset_path.lower().endswith('.xlsx'):
+                print(f"Skipping XLSX file: {asset_path}")
+                continue
+
+            # Check if the file is an image file
+            if not img and asset_path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                print(f"Skipping image file: {asset_path}")
+                continue
 
             # Construct the filepath within the assets directory
             asset_filepath = os.path.join(save_folder, asset_path.lstrip('/'))
@@ -28,30 +55,17 @@ def download_asset(asset_urls, save_folder, headers, img=True, pdf=True, doc=Tru
                 f.write(response.content)
                 print(f"Downloaded {asset_path}.")
 
-            if img:
-                # Resize images if it's an image file
-                if asset_path.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-                    resize_image(asset_filepath, (100, 100))  # Specify desired dimensions
-
-            if pdf:
+            if pdf and asset_path.lower().endswith('.pdf'):
                 # Extract text from PDF files
-                if asset_path.lower().endswith('.pdf'):
-                    extract_text_from_pdf(asset_filepath)
+                extract_text_from_pdf(asset_filepath)
 
-            if doc:
+            if doc and asset_path.lower().endswith('.docx'):
                 # Extract text from Word files
-                if asset_path.lower().endswith('.docx'):
-                    extract_text_from_docx(asset_filepath)
+                extract_text_from_docx(asset_filepath)
 
-            if xlx:
+            if xlx and asset_path.lower().endswith('.xlsx'):
                 # Extract text from Excel files
-                if asset_path.lower().endswith('.xlsx'):
-                    extract_text_from_excel(asset_filepath)
-
-def resize_image(image_path, dimensions):
-    img = Image.open(image_path)
-    img_resized = img.resize(dimensions, Image.ANTIALIAS)
-    img_resized.save(image_path)
+                extract_text_from_excel(asset_filepath)
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, 'rb') as pdf_file:
@@ -78,7 +92,7 @@ def extract_text_from_excel(excel_path):
             text += '\n'
     print(f"Text extracted from {excel_path}: {text}")
 
-def download_html_and_asset(url_list, save_folder, max_depth=None, img=True, pdf=True, doc=True, xlx=True):
+def download_html_and_asset(url_list, save_folder, max_depth=None, img=True, pdf=True, doc=True, xlx=True, html=True):
     # Standard User-Agent header for a common web browser
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
 
@@ -126,6 +140,6 @@ def download_html_and_asset(url_list, save_folder, max_depth=None, img=True, pdf
                 asset_urls.add(absolute_url)
 
             # Download assets
-            download_asset(asset_urls, save_folder, headers, img, pdf, doc, xlx)
+            download_asset(asset_urls, save_folder, headers, img, pdf, doc, xlx, html)
 
     return True
